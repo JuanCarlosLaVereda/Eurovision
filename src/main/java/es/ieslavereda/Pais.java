@@ -3,6 +3,8 @@ package es.ieslavereda;
 import java.util.*;
 
 public class Pais implements Comparable<Pais>{
+
+    public static Comparator<Pais> SORT_BY_PUNTOS = (p1,p2) -> p1.getPuntos()- p2.getPuntos();
     private String nombre;
     private String cantante;
     private Integer puntos;
@@ -11,7 +13,7 @@ public class Pais implements Comparable<Pais>{
     public Pais(String nombre, String cantante){
         this.nombre = nombre;
         this.cantante = cantante;
-        paisesVotados = new HashMap<>();
+        paisesVotados = new LinkedHashMap<>();
         puntos = 0;
     }
     public String getCantante() {
@@ -48,20 +50,32 @@ public class Pais implements Comparable<Pais>{
     public void votarAll(Collection<Pais> paises){
         List<Pais> paisesLinked = new LinkedList<>(paises);
         Collections.shuffle(paisesLinked);
+        List<Pais> paises10 = new LinkedList<>();
         Iterator<Pais> iterator = paisesLinked.iterator();
-        int i = 1;
-        int j = 0;
-        while (j<12){
+        while (paises10.size()!=10){
             Pais pais = iterator.next();
-            if (votar(pais, i)){
-                j++;
-                i++;
-            } else {
-                i++;
+            if (!(pais.equals(this))){
+                paises10.add(pais);
             }
-
         }
+
+        int i=1;
+        for (Pais pais:paises10) {
+            if (i ==9){
+                i = 10;
+            } else if (i==11) {
+                i=12;
+            }
+            votar(pais, i);
+            i++;
+        }
+
     }
+
+/*    @Override
+    public int hashCode(){
+        return nombre.hashCode()+puntos.hashCode();
+    }*/
 
     @Override
     public int compareTo(Pais pais){
