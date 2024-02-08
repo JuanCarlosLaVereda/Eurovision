@@ -13,7 +13,7 @@ public class Main {
 
         List<Pais> listPaises = new LinkedList<>();
         for (int i = 0; i <paisesArray.length; i++) {
-            listPaises.add(new Pais(paisesArray[i], "Cantante" + i));
+            listPaises.add(new Pais(paisesArray[i], "Cantante" + i, "Cancion" + i));
         }
         Collections.sort(listPaises);
         System.out.println(listPaises);
@@ -75,8 +75,30 @@ public class Main {
             System.out.print("\n" + listPaisesVotosGanador.get(i) + " " + listPaisesVotosganadorPuntos.get(i));
         }
 
-        System.out.println("------------------------------");
+        System.out.println("\n------------------------------");
         System.out.println("- Listado de canciones ordenadas por nombre:");
+        System.out.println(listPaises.stream()
+                .sorted((p1, p2)-> p1.getCancion().compareTo(p2.getCancion()))
+                .map(p->p.getCancion())
+                .collect(Collectors.joining("\n"))
+        );
+
+        System.out.println("------------------------------");
+        System.out.println("- Listado de las 3 canciones mas votadas junto con su puntuacion: ");
+        System.out.println(listPaises.stream()
+                .sorted(Pais.SORT_BY_PUNTOS.reversed())
+                .map(p->p.getCancion() + " " + p.getPuntos())
+                .limit(3)
+                .collect(Collectors.joining("\n"))
+        );
+        System.out.println("------------------------------");
+        System.out.println("- Listado de cantantes ordenados por nombre: ");
+        System.out.println(listPaises.stream()
+                .sorted((p1,p2) -> p1.getCantante().compareTo(p2.getCantante()))
+                .map(p->p.getCantante())
+                .collect(Collectors.joining("\n"))
+        );
+
 
 
     }

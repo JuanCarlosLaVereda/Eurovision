@@ -7,14 +7,20 @@ public class Pais implements Comparable<Pais>{
     public static Comparator<Pais> SORT_BY_PUNTOS = (p1,p2) -> p1.getPuntos()- p2.getPuntos();
     private String nombre;
     private String cantante;
+    private String cancion;
     private Integer puntos;
     private Map<Pais, Integer> paisesVotados;
 
-    public Pais(String nombre, String cantante){
+    public Pais(String nombre, String cantante, String cancion){
         this.nombre = nombre;
         this.cantante = cantante;
+        this.cancion = cancion;
         paisesVotados = new LinkedHashMap<>();
         puntos = 0;
+    }
+
+    public String getCancion() {
+        return cancion;
     }
     public String getCantante() {
         return cantante;
